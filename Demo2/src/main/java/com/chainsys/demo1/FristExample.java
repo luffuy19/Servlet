@@ -2,6 +2,7 @@ package com.chainsys.demo1;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,51 +16,62 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/FristExample")
 public class FristExample extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public FristExample() {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    ArrayList<Person> person = new ArrayList<Person>();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		PrintWriter writer = response.getWriter();
+		int rollNo=Integer.parseInt(request.getParameter("rollNo"));
 		String name = request.getParameter("username");
 		String email = request.getParameter("email");
-		String phno = request.getParameter("phno");
+		int phno = (int)Integer.parseInt(request.getParameter("phno"));
 		String password = request.getParameter("password");
 		String gender = request.getParameter("gender");
+		Person p=new Person(rollNo,name, email,phno, password, gender);
+		person.add(p);
+		request.setAttribute("person", person);
 		request.getRequestDispatcher("table.jsp").forward(request, response);
-//		writer.print("<table>\r\n<tr>\r\n"
-//				+ "    <th>Name</th>\r\n"
-//				+ "    <th>Email</th>\r\n"
-//				+ "    <th>Phone Number</th>\r\n"
-//				+ "    <th>Password</th>\r\n"
-//				+ "    <th>Gender</th>\r\n"
-//				+ "  </tr>"
-//				+ "  <tr>\r\n"
-//				+ "    <th>"+name+"</th>\r\n"
-//				+ "    <th>"+email+"</th>\r\n"
-//				+ "    <th>"+phno+"</th>\r\n"
-//				+ "    <th>"+password+"</th>\r\n"
-//				+ "    <th>"+gender+"</th>\r\n"
-//				+ "  </tr>\r\n"
-//				+ "</table>");
-//		System.out.println(name);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	protected void doDelete(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		for(int i=0;i<person.size();i++) {
+			if((person.get(i).getRollNo())==rollNo) {
+				person.remove(i);
+			}
+		}
+		request.setAttribute("person", person);
+		request.getRequestDispatcher("table.jsp").forward(request, response);
+	}
+	protected void doUpdate(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name = request.getParameter("username");
+		String email = request.getParameter("email");
+		int phno = (int)Integer.parseInt(request.getParameter("phno"));
+		String password = request.getParameter("password");
+		String gender = request.getParameter("gender");
+		for(int i=0;i<person.size();i++) {
+			if((person.get(i).getRollNo())==rollNo) {
+				Person persons = person.get(i);
+				persons.setRollNo(rollNo);
+				persons.setName(name);
+				persons.setEmail(email);
+				persons.setPhNo(phno);
+				persons.setPassword(password);
+				persons.setGender(gender);
+			}
+		}
+		
+		request.setAttribute("person", person);
+		request.getRequestDispatcher("table.jsp").forward(request, response);
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		int rollNo = Integer.parseInt(request.getParameter("rollNo"));
+		String choice = request.getParameter("action");
+
+		switch(choice){
+			case "delete" : doDelete(rollNo, request, response);
+			case "update" : doUpdate(rollNo, request, response);
+		}	
 	}
 
 }
