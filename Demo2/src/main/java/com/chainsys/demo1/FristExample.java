@@ -30,10 +30,28 @@ public class FristExample extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter writer = response.getWriter();
-		int num1 = Integer.parseInt(request.getParameter("num1"));
-		int num2 = Integer.parseInt(request.getParameter("num2"));
-		writer.print("<h1>Addition of Two Number :</h1>"+"<h1>"+(num1+num2)+"</h1>");
-		System.out.println((num1+num2));
+		String name = request.getParameter("username");
+		String email = request.getParameter("email");
+		String phno = request.getParameter("phno");
+		String password = request.getParameter("password");
+		String gender = request.getParameter("gender");
+		request.getRequestDispatcher("table.jsp").forward(request, response);
+//		writer.print("<table>\r\n<tr>\r\n"
+//				+ "    <th>Name</th>\r\n"
+//				+ "    <th>Email</th>\r\n"
+//				+ "    <th>Phone Number</th>\r\n"
+//				+ "    <th>Password</th>\r\n"
+//				+ "    <th>Gender</th>\r\n"
+//				+ "  </tr>"
+//				+ "  <tr>\r\n"
+//				+ "    <th>"+name+"</th>\r\n"
+//				+ "    <th>"+email+"</th>\r\n"
+//				+ "    <th>"+phno+"</th>\r\n"
+//				+ "    <th>"+password+"</th>\r\n"
+//				+ "    <th>"+gender+"</th>\r\n"
+//				+ "  </tr>\r\n"
+//				+ "</table>");
+//		System.out.println(name);
 	}
 
 	/**
