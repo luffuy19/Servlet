@@ -1,13 +1,14 @@
-package com.chainsys.demo1;
+package com.chainsys.model;
 
 public class Person {
 	int rollNo;
 	String name;
 	String email;
-	int phNo;
+	String phNo;
 	String password;
 	String gender;
-	public Person(int rollNo2, String name, String email, int phNo, String password, String gender) {
+	
+	public Person(int rollNo2, String name, String email, String phNo, String password, String gender) {
 		super();
 		this.rollNo = rollNo2;
 		this.name = name;
@@ -15,6 +16,9 @@ public class Person {
 		this.phNo = phNo;
 		this.password = password;
 		this.gender = gender;
+	}
+	public Person() {
+		// TODO Auto-generated constructor stub
 	}
 	public int getRollNo() {
 		return rollNo;
@@ -25,7 +29,7 @@ public class Person {
 	public String getEmail() {
 		return email;
 	}
-	public int getPhNo() {
+	public String getPhNo() {
 		return phNo;
 	}
 	public String getPassword() {
@@ -43,7 +47,7 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public void setPhNo(int phNo) {
+	public void setPhNo(String phNo) {
 		this.phNo = phNo;
 	}
 	public void setPassword(String password) {

@@ -1,6 +1,7 @@
-package com.chainsys.demo1;
+package com.chainsys.dao;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -12,28 +13,32 @@ import javax.servlet.http.HttpServletResponse;
 import com.chainsys.model.Person;
 
 /**
- * Servlet implementation class FristExample
+ * Servlet implementation class StudentImp1
  */
-//@WebServlet("/FristExample")
-//public class FristExample extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
-//    public FristExample() {
-//        super();
-//        // TODO Auto-generated constructor stub
-//    }
-//    ArrayList<Person> person = new ArrayList<Person>();
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		int rollNo=Integer.parseInt(request.getParameter("rollNo"));
-//		String name = request.getParameter("username");
-//		String email = request.getParameter("email");
-//		int phno = (int)Integer.parseInt(request.getParameter("phno"));
-//		String password = request.getParameter("password");
-//		String gender = request.getParameter("gender");
-//		Person p=new Person(rollNo,name, email,phno, password, gender);
-//		person.add(p);
-//		request.setAttribute("person", person);
+@WebServlet("/FristExample")
+public class StudentImp2 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int rollNo=Integer.parseInt(request.getParameter("rollNo"));
+		String name = request.getParameter("username");
+		String email = request.getParameter("email");
+		String phno = request.getParameter("phno");
+		String password = request.getParameter("password");
+		String gender = request.getParameter("gender");
+		Person p=new Person(rollNo,name, email,phno, password, gender);
+		StudentImp1 studentImp1 = new StudentImp1();
+		try {
+			ArrayList<Person> al = studentImp1.saveStudent(p);
+			request.setAttribute("person", al);
+			request.getRequestDispatcher("table.jsp").forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		request.setAttribute("person", p);
 //		request.getRequestDispatcher("table.jsp").forward(request, response);
-//	}
+	}
 //	protected void doDelete(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		for(int i=0;i<person.size();i++) {
 //			if((person.get(i).getRollNo())==rollNo) {
@@ -60,7 +65,7 @@ import com.chainsys.model.Person;
 //				persons.setGender(gender);
 //			}
 //		}
-//		
+		
 //		request.setAttribute("person", person);
 //		request.getRequestDispatcher("table.jsp").forward(request, response);
 //	}
@@ -74,5 +79,5 @@ import com.chainsys.model.Person;
 //			case "update" : doUpdate(rollNo, request, response);
 //		}	
 //	}
-//
-//}
+
+}
