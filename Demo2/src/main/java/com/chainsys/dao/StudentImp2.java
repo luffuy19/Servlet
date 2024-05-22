@@ -19,65 +19,74 @@ import com.chainsys.model.Person;
 public class StudentImp2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	@SuppressWarnings("unlikely-arg-type")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int rollNo=Integer.parseInt(request.getParameter("rollNo"));
+		StudentImp1 studentImp1 = new StudentImp1();
+		ArrayList<Person> allUsers = StudentImp1.getAllUsers();
 		String name = request.getParameter("username");
+		for(Person names : allUsers) {
+			if(names.getName().equals(name)) {
+				request.setAttribute("namemessage","Already User Exit");
+				request.getRequestDispatcher("index.jsp").forward(request, response);
+			}
+		}
 		String email = request.getParameter("email");
 		String phno = request.getParameter("phno");
 		String password = request.getParameter("password");
 		String gender = request.getParameter("gender");
-		Person p=new Person(rollNo,name, email,phno, password, gender);
-		StudentImp1 studentImp1 = new StudentImp1();
+		Person p=new Person(0,name, email,phno, password, gender);
+
 		try {
 			ArrayList<Person> al = studentImp1.saveStudent(p);
 			request.setAttribute("person", al);
 			request.getRequestDispatcher("table.jsp").forward(request, response);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	protected void doDelete(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		StudentImp1 studentImp1 = new StudentImp1();
+		ArrayList<Person> delete;
+		try {
+			delete = studentImp1.delete(rollNo);
+			request.setAttribute("person", delete);
+			request.getRequestDispatcher("table.jsp").forward(request, response);
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		request.setAttribute("person", p);
-//		request.getRequestDispatcher("table.jsp").forward(request, response);
+		
 	}
-//	protected void doDelete(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		for(int i=0;i<person.size();i++) {
-//			if((person.get(i).getRollNo())==rollNo) {
-//				person.remove(i);
-//			}
-//		}
-//		request.setAttribute("person", person);
-//		request.getRequestDispatcher("table.jsp").forward(request, response);
-//	}
-//	protected void doUpdate(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String name = request.getParameter("username");
-//		String email = request.getParameter("email");
-//		int phno = (int)Integer.parseInt(request.getParameter("phno"));
-//		String password = request.getParameter("password");
-//		String gender = request.getParameter("gender");
-//		for(int i=0;i<person.size();i++) {
-//			if((person.get(i).getRollNo())==rollNo) {
-//				Person persons = person.get(i);
-//				persons.setRollNo(rollNo);
-//				persons.setName(name);
-//				persons.setEmail(email);
-//				persons.setPhNo(phno);
-//				persons.setPassword(password);
-//				persons.setGender(gender);
-//			}
-//		}
+	protected void doUpdate(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		try {
+			String email = request.getParameter("email");
+			String phno = request.getParameter("phno");
+			String password = request.getParameter("password");
+			StudentImp1 studentImp1 = new StudentImp1();
+			studentImp1.UpdateStudent(email,password,phno,rollNo);
+			ArrayList<Person> allUsers = StudentImp1.getAllUsers();
+			request.setAttribute("person", allUsers);
+			request.getRequestDispatcher("table.jsp").forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 //		request.setAttribute("person", person);
 //		request.getRequestDispatcher("table.jsp").forward(request, response);
-//	}
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		int rollNo = Integer.parseInt(request.getParameter("rollNo"));
-//		String choice = request.getParameter("action");
-//
-//		switch(choice){
-//			case "delete" : doDelete(rollNo, request, response);
-//			case "update" : doUpdate(rollNo, request, response);
-//		}	
-//	}
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		int rollNo = Integer.parseInt(request.getParameter("rollNo"));
+		String choice = request.getParameter("action");
+		System.out.println(choice);
+		switch(choice){
+			case "delete" : doDelete(rollNo, request, response);
+			case "update" : doUpdate(rollNo, request, response);
+							
+		}	
+	}
 
 }
