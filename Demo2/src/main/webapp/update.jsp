@@ -34,11 +34,15 @@
 					id="password" name="password" placeholder="Enter New Password"
 					required>
 			</div>
+			<br>
 			<div class="form-group">
-				<input type="hidden" name="action" value="update"> 
-				<input type="hidden" name="rollNo" value="<%=request.getParameter("rollNo")%>"> 
-				<input type="submit" value="Update">
+				<input type="hidden" name="action" value="update"> <input
+					type="hidden" name="rollNo"
+					value="<%=request.getParameter("rollNo")%>"> <input
+					type="submit" value="Update"
+					style="width: 100%; padding: 10px; border: none; border-radius: 4px; background-color: #8a2be2; color: #ffffff; cursor: pointer; font-size: 16px; transition: background-color 0.3s;">
 			</div>
+
 		</form>
 
 	</div>

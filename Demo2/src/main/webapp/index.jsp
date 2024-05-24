@@ -57,7 +57,7 @@
         <h2>Registration Form</h2>
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="<%=msg %>" required>
+         <input type="text" id="username" name="username" placeholder="<%=msg %>" required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>

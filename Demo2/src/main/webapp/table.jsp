@@ -95,7 +95,7 @@ th {
             <td>
                 <form action="FristExample" method="post">
                     <input type="hidden" name="rollNo" value="<%= p.getRollNo() %>">
-                    <input type="submit" class="delete-button" value="Delete" name="action">
+                    <input type="submit" class="delete-button" value="delete" name="action">
                 </form>
             </td>
             <td>

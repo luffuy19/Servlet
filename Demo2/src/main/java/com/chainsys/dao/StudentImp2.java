@@ -46,9 +46,8 @@ public class StudentImp2 extends HttpServlet {
 	}
 	protected void doDelete(int rollNo ,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StudentImp1 studentImp1 = new StudentImp1();
-		ArrayList<Person> delete;
 		try {
-			delete = studentImp1.delete(rollNo);
+			ArrayList<Person> delete = studentImp1.delete(rollNo);
 			request.setAttribute("person", delete);
 			request.getRequestDispatcher("table.jsp").forward(request, response);
 		} catch (ClassNotFoundException | SQLException e) {
