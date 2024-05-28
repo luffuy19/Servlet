@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.jasper.tagplugins.jstl.core.Out;
-
 import com.chainsys.dto.TeacherDb;
 import com.chainsys.model.Student;
 
@@ -42,7 +39,7 @@ public class SortingServlet extends HttpServlet {
 		}
 	}
 	public ArrayList<Student> getEmployeesSortedByColumn(String columnName,String section) throws ClassNotFoundException, SQLException {
-	    ArrayList<Student> employees = TeacherDb.show(section); // Assuming insert() retrieves all employees
+	    ArrayList<Student> employees = (ArrayList<Student>) TeacherDb.show(section); // Assuming insert() retrieves all employees
 	    System.out.println(employees.get(0));
 	    switch (columnName) {
 	        case "rank":

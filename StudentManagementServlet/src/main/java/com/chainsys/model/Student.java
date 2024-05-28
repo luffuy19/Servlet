@@ -93,6 +93,9 @@ public class Student {
 		this.halfYearly = halfYearly;
 		this.annualTotal = annualTotal;
 	}
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public String toString() {
 		return "Student [rollNo=" + rollNo + ", studentName=" + studentName + ", attendence=" + attendence

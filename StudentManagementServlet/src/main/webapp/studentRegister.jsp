@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,6 @@
         margin: 0;
         padding: 0;
     }
-
     .container {
         max-width: 400px;
         margin: 50px auto;
@@ -56,16 +56,17 @@
 <body>
 
 <div class="container">
+	
     <h2>Student Registration</h2>
-    <form action="#" method="post">
+    <form action="InsertServlet" method="post">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <label for="attendance">Attendance:</label>
+        <input type="text" id="attendance" name="attendance" required>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <label for="standard">Standard:</label>
+        <input type="text" id="standard" name="standard" required>
 
         <input type="submit" value="Register">
     </form>

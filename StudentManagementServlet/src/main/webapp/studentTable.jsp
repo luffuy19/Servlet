@@ -1,13 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="com.chainsys.model.Student"%>
+<%@ page import="com.chainsys.dto.TeacherDb"%>
 <%@ page import="java.util.ArrayList"%>
+<%
+if(session==null || session.getAttribute("teacherClass")==null){
+	response.sendRedirect("index.html");
+}
+String section = (String) session.getAttribute("teacherClass");
+ArrayList<Student> al = (ArrayList<Student>) TeacherDb.show(section);
+request.setAttribute("student", al);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>User Information</title>
-<style type="text/css">
+<style>
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -70,21 +79,25 @@ th {
 </head>
 <body>
 	<h2>User Information</h2>
-		<form action="SortingServlet" method="post">
-			 <select name="column" id="column"
-				style="width: 7%; padding: 10px; margin: 10px 0; border-radius: 4px; border: 1px solid #ccc; font-size: 16px;">
-				<option value="rank">Rank</option>
-				<option value="attendance">Attendance</option>
-				<option value="name">Name</option>
-				<!-- Add options for other columns if needed -->
-			</select>
-			<button type="submit"
-				style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Sort</button>
-		</form>
-		<form>
-			<input type="search">
-		</form>
-		<table>
+	<form action="SortingServlet" method="post">
+		<select name="column" id="column"
+			style="width: 7%; padding: 10px; margin: 10px 0; border-radius: 4px; border: 1px solid #ccc; font-size: 16px;">
+			<option value="rank">Rank</option>
+			<option value="attendance">Attendance</option>
+			<option value="name">Name</option>
+		</select>
+		<button type="submit"
+			style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Sort</button>
+	</form>
+	<form action="SearchServlet" method="post"
+		style="display: flex; align-items: center;">
+		<input type="search" name="searchQuery"
+			style="width: 10%; padding: 10px; margin: 10px 0; border-radius: 4px; border: 1px solid #ccc; font-size: 16px;">
+		<input type="button" value="Search"
+			style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+	</form>
+
+	<table>
 		<tr>
 			<th>RollNo</th>
 			<th>Name</th>
@@ -100,7 +113,6 @@ th {
 			<th>Update</th>
 		</tr>
 		<%
-		// Assuming "person" is a list of person objects available in request attributes
 		ArrayList<Student> student = (ArrayList<Student>) request.getAttribute("student");
 		if (student != null) {
 			for (Student s : student) {
@@ -117,7 +129,7 @@ th {
 			<td><%=s.getStudentClass()%></td>
 			<td><%=s.getMentorName()%></td>
 			<td>
-				<form action="FristExample" method="post">
+				<form action="DeleteServlet" method="post">
 					<input type="hidden" name="rollNo" value="<%=s.getRollNo()%>">
 					<input type="submit" class="delete-button" value="delete"
 						name="action">
@@ -142,8 +154,7 @@ th {
 		}
 		%>
 	</table>
-	<a href="studentRegister.html" class="add-user-link">Add User</a>
-
+	<a href="studentRegister.jsp" class="add-user-link">Add User</a>
+	<a href="LogoutServlet" class="add-user-link">LogOut</a>
 </body>
 </html>
-
